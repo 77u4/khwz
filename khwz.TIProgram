@@ -86,9 +86,7 @@ ToolBar
 	Title "Bearbeiten"
 		Item "Koffeinmenge", bm
 		Item "Zeit", bt
-	Title "Graph"
-		Item "Zeichnen", gdraw
-		Item "Löschen", gdel
+	Title "Graph", gdraw
 	Title "Beenden", end
 EndTBar
 Goto end
@@ -239,21 +237,22 @@ Goto tb
 
 :"Zeichnen"
 Lbl gdraw
+If htb=1 and htk=1 and vm≠0 Then
 ClrDraw
 :"Window-Dimensionen einstellen."
-
-:"Xmin 0"
-:"Xmax 10"
-:"Xscl 1"
-:"Ymin 0"
-:"Ymax 800"
-:"Yscl 10"
-Disp G
+DispG
+0→Xmin
+20→Xmax
+1→Xscl
+0→Ymin
+expr(vm)→Ymax
+10→Yscl
 DrawFunc k(x)
 DrawFunc vb
-ZoomFit
+PxlText "Koffeinspiegel", 55, 65
 Pause
 1→gst
+EndIf
 Goto restart
 
 :"Zeichnung loeschen"
@@ -265,5 +264,6 @@ Goto restart
 
 Lbl end
 ClrIO
+ZoomStd
 DispHome
 EndPrgm
