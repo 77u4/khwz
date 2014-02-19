@@ -1,0 +1,269 @@
+khwz()
+Prgm
+:"init"
+Lbl init
+:"Zum IO Fenster wechseln"
+Disp ""
+:"Alles loeschen"
+ClrIO
+ClrErr
+ClrGraph
+:"Globale Variablen loeschen"
+DelVar k, x, vm, vb
+:"Lokale Variablen definieren"
+:"Berechnung"
+Local a, b, t, kh, km, khs, kms, gsm
+:"Prgm"
+Local htb, htk
+0→htb
+0→htk
+0→vm
+0→gsm
+0→gst
+:"restart"
+Lbl restart
+
+:"ToolBar"
+Lbl tb
+ClrIO
+Output 120, 60, "Werte eingeben bei F2"
+Output 0,63, "Koffeinmenge:"
+Output 0,144, "0"
+Output 0,168, "mg"
+Output 8,45, "Vergangene Zeit:"
+Output 8,144, "keine."
+
+:"Werte zeigen, if vm is set"
+If htb = 1 Then
+Output 0,63, "Koffeinmenge:"
+Output 0,144, vm
+Output 0,168, "mg"
+EndIf
+
+:"Werte zeigen, if htk is set"
+If htk = 1 Then
+Output 8,45, "Vergangene Zeit:"
+Output 8,144, "       "
+Output 8,144, khs
+Output 8,159, "h"
+Output 8,169, kms
+Output 8,184, "min"
+EndIf
+
+:"Sind alle Werte gegeben?"
+If htb=1 and htk=1 and vm≠0 Then
+
+:"Haessliche Notiz ueberschreiben"
+
+
+:"Koffein im Blut berechnen"
+:"Halbwertszeit: 3h"
+expr(vm)*(1/2)^(x/3)→k(x)
+approx(k((khs+(kms/60))))→vb
+
+:"Koffein im Blut anzeigen"
+Output 60,43, "Koffein im Blut:"
+Output 60,144, vb
+Output 60,180, "mg"
+
+EndIf
+
+:"Meldung geloescht"
+If gsm=1 Then
+Dialog
+	Title "Erfolg"
+	Text "Graph gelöscht."
+EndDlog
+0→gsm
+Goto restart
+EndIf
+
+:"Show ToolBar"
+ToolBar
+	Title "Koffein HWZ"
+		Item "Info", hinfo
+		Item "Koffein-Wertetabelle", wtbl
+	Title "Bearbeiten"
+		Item "Koffeinmenge", bm
+		Item "Zeit", bt
+	Title "Graph"
+		Item "Zeichnen", gdraw
+		Item "Löschen", gdel
+	Title "Beenden", end
+EndTBar
+Goto end
+
+:"info"
+Lbl hinfo
+Dialog
+	Title "Info Ű Koffeinhalbwertszeit"
+	Text "© 2014 Jannis Hutt"
+	Text "Fork on GitHub:"
+	Text "github.com/77u4/khwz"
+	Text "Angenommene Halbwertszeit: 3h"
+EndDlog
+Goto restart
+
+Lbl wtbl
+Dialog
+	Title "Koffein-Wertetabelle"
+	Text "Tasse Kaffee (150ml): 40-120mg"
+	Text "Espresso (30ml): 40mg"
+	Text "Guarana: 40-90mg pro 1g"
+	Text "Club-Mate: 20mg/100ml"
+	Text "Red Bull o.ä.: 32mg/100ml"
+	Text "Coca Cola u.ä.: 10mg/100ml"
+	Text "Coffeinum n 0,2g: 200mg"
+EndDlog
+Goto restart
+
+Lbl bm
+0→vm
+While vm=0
+Request "Koffeinmenge (in mg)", vm
+EndWhile
+1→htb
+Goto tb
+
+Lbl bt
+0→kh
+0→km
+While km=0 and kh=0
+Dialog
+	Title "Zeit der Koffeineinnahme"
+	Text "Wieviel Zeit ist verstrichen, seit dem"
+	Text "du Koffein zu dir genommen hast?"
+	Dropdown "Stunden",{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},kh
+	Dropdown "Minuten",{"0", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"},km
+EndDlog
+EndWhile
+
+:"Stunden Auswerten und Value zuweisen"
+:"0h"
+If kh=1 Then
+	0→khs
+EndIf
+:"1h"
+If kh=2 Then
+	1→khs
+EndIf
+:"2h"
+If kh=3 Then
+	2→khs
+EndIf
+:"3h"
+If kh=4 Then
+	3→khs
+EndIf
+:"4h"
+If kh=5 Then
+	4→khs
+EndIf
+:"5h"
+If kh=6 Then
+	5→khs
+EndIf
+:"6h"
+If kh=7 Then
+	6→khs
+EndIf
+:"7h"
+If kh=8 Then
+	7→khs
+EndIf
+:"8h"
+If kh=9 Then
+	8→khs
+EndIf
+:"9h"
+If kh=10 Then
+	9→khs
+EndIf
+:"10h"
+If kh=11 Then
+	10→khs
+EndIf
+
+:"Minuten Auswerten und Value zuweisen"
+:"0m"
+If km=1 Then
+	0→kms
+EndIf
+:"5m"
+If km=2 Then
+	5→kms
+EndIf
+:"10m"
+If km=3 Then
+	10→kms
+EndIf
+:"15m"
+If km=4 Then
+	15→kms
+EndIf
+:"20m"
+If km=5 Then
+	20→kms
+EndIf
+:"25m"
+If km=6 Then
+	25→kms
+EndIf
+:"30m"
+If km=7 Then
+	30→kms
+EndIf
+:"35m"
+If km=8 Then
+	35→kms
+EndIf
+:"40m"
+If km=9 Then
+	40→kms
+EndIf
+:"45m"
+If km=10 Then
+	45→kms
+EndIf
+:"50m"
+If km=11 Then
+	50→kms
+EndIf
+:"55m"
+If km=12 Then
+	55→kms
+EndIf
+
+1→htk
+Goto tb
+
+:"Zeichnen"
+Lbl gdraw
+ClrDraw
+:"Window-Dimensionen einstellen."
+
+:"Xmin 0"
+:"Xmax 10"
+:"Xscl 1"
+:"Ymin 0"
+:"Ymax 800"
+:"Yscl 10"
+Disp G
+DrawFunc k(x)
+DrawFunc vb
+ZoomFit
+Pause
+1→gst
+Goto restart
+
+:"Zeichnung loeschen"
+Lbl gdel
+ClrDraw
+ZoomStd
+1→gsm
+Goto restart
+
+Lbl end
+ClrIO
+DispHome
+EndPrgm
