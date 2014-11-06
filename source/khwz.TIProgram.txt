@@ -1,16 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>cells</key>
-	<array>
-		<dict>
-			<key>column</key>
-			<integer>1</integer>
-			<key>row</key>
-			<integer>1</integer>
-			<key>stringValue</key>
-			<string>khwz()
+khwz()
 Prgm
 :"init"
 Lbl init
@@ -278,16 +266,4 @@ Lbl end
 ClrIO
 ZoomStd
 DispHome
-EndPrgm</string>
-		</dict>
-	</array>
-	<key>device name</key>
-	<string>khwz</string>
-	<key>device type</key>
-	<string>Voyage 200</string>
-	<key>isProtected</key>
-	<true/>
-	<key>object type</key>
-	<string>Program</string>
-</dict>
-</plist>
+EndPrgm
